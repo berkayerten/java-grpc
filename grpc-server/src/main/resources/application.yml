@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: grpc-server
+server:
+  port: 8173
+grpc:
+  server:
+    port: 8174
+
+logging:
+  level:
+    net.devh: DEBUG
+    io.grpc: DEBUG

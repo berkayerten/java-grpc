@@ -1,0 +1,12 @@
+spring:
+    application:
+        name: grpc-client
+server:
+    port: 8175
+grpc:
+  client:
+    user-service:
+      address: ${GRPC_SERVER_ADDRESS:static://localhost:8174}
+      negotiation-type: plaintext
+
+
