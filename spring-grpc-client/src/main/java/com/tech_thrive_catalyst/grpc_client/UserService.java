@@ -2,5 +2,7 @@ package com.tech_thrive_catalyst.grpc_client;
 
 public interface UserService {
 
-    String getUser(String id);
+    UserDto getUser(String id);
+
+    UserDto addUser(String name, String email);
 }

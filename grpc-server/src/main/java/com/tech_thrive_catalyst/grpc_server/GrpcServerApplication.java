@@ -16,5 +16,4 @@ public class GrpcServerApplication {
         server.start();
         server.awaitTermination();
 	}
-
 }

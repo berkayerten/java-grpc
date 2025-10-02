@@ -1,17 +1,23 @@
 plugins {
     id 'java'
+    id 'application'
     id 'com.google.protobuf' version '0.9.4'
 }
 
 group = 'com.tech-thrive-catalyst'
 version = '0.0.1-SNAPSHOT'
-description = 'Spring Boot gRPC Server'
+description = 'Java gRPC Server'
 
 java {
 	toolchain {
 		languageVersion = JavaLanguageVersion.of(21)
 	}
 }
+
+application {
+    mainClass = 'com.tech_thrive_catalyst.grpc_server.GrpcServerApplication'
+}
+
 
 repositories {
 	mavenCentral()

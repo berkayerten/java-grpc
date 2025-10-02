@@ -3,9 +3,7 @@ package com.tech_thrive_catalyst.grpc_server;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
-import org.springframework.stereotype.Repository;
 
-@Repository
 public class UserRepository {
 
     private final Map<String, UserDto> users;
@@ -19,5 +17,10 @@ public class UserRepository {
         return users.containsKey(id)
             ? Optional.of(users.get(id))
             : Optional.empty();
+    }
+
+    public UserDto save(UserDto user) {
+        users.put(user.id(), user);
+        return user;
     }
 }

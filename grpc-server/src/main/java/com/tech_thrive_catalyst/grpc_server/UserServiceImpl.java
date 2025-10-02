@@ -1,12 +1,11 @@
 package com.tech_thrive_catalyst.grpc_server;
 
+import com.tech_thrive_catalyst.grpc_server.user.AddUserRequest;
 import com.tech_thrive_catalyst.grpc_server.user.UserRequest;
 import com.tech_thrive_catalyst.grpc_server.user.UserResponse;
 import com.tech_thrive_catalyst.grpc_server.user.UserServiceGrpc;
 import io.grpc.stub.StreamObserver;
-import net.devh.boot.grpc.server.service.GrpcService;
 
-@GrpcService
 public class UserServiceImpl extends UserServiceGrpc.UserServiceImplBase {
 
     private final UserRepository repository;
@@ -18,16 +17,23 @@ public class UserServiceImpl extends UserServiceGrpc.UserServiceImplBase {
     @Override
     public void getUser(UserRequest request, StreamObserver<UserResponse> responseObserver) {
         repository.findById(request.getId())
-                .ifPresent(user -> getUser(responseObserver, user));
+                .ifPresent(user -> buildUserResponseObserver(responseObserver, user));
     }
 
-    private static void getUser(StreamObserver<UserResponse> responseObserver, UserDto user) {
-        UserResponse response = buildUserResponse(user);
+    @Override
+    public void addUser(AddUserRequest request, StreamObserver<UserResponse> responseObserver) {
+        UserDto user = UserDto.withId(request.getName(), request.getEmail());
+        UserDto newUser = repository.save(user);
+        buildUserResponseObserver(responseObserver, newUser);
+    }
+
+    private static void buildUserResponseObserver(StreamObserver<UserResponse> responseObserver, UserDto user) {
+        UserResponse response = toUserResponse(user);
         responseObserver.onNext(response);
         responseObserver.onCompleted();
     }
 
-    private static UserResponse buildUserResponse(UserDto user) {
+    private static UserResponse toUserResponse(UserDto user) {
         return UserResponse.newBuilder()
                 .setId(user.id())
                 .setName(user.name())

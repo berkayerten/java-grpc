@@ -12,7 +12,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String getUser(String id) {
+    public UserDto getUser(String id) {
         return userServiceClient.getUserInfo(id);
+    }
+
+    @Override
+    public UserDto addUser(String name, String email) {
+        return userServiceClient.addUser(name, email);
     }
 }
