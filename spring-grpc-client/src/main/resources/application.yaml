@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: grpc-client
+server:
+  port: 8176
+grpc:
+  client:
+    user-service:
+      address: ${GRPC_SERVER_ADDRESS:localhost:8174}
+      negotiation-type: plaintext
+logging:
+  level:
+    net.devh: DEBUG
+    io.grpc: DEBUG
